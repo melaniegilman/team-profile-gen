@@ -5,7 +5,7 @@ const generateCards = teamDataArr => {
             <div class="row justify-content-center">
                 <div class="card-deck"> 
         
-                    ${teamDataArr.filter( employee => {return employee = "Manager"} ).map(({ name, id, email, office}) => {
+                ${teamDataArr.filter( employee => {return employee.getRole() === "Manager"} ).map(({ name, id, email, office}) => {
                             return `
                             <div class="card" style="width: 18rem;">
                                 <div class="card-header text-center">
@@ -22,7 +22,7 @@ const generateCards = teamDataArr => {
                         `; 
                     }).join('')}
                
-                    ${teamDataArr.filter( (employee) => {return employee = "Engineer"} ).map(({ name, id, email, github }) => {
+                    ${teamDataArr.filter( employee => {return employee.getRole() === "Engineer"} ).map(({ name, id, email, github }) => {
                         return `
                             <div class="card" style="width: 18rem;">
                                 <div class="card-header text-center">
@@ -38,7 +38,7 @@ const generateCards = teamDataArr => {
                         `;
                     }).join('')}
                 
-                    ${teamDataArr.filter( (employee) => {return employee = "Intern"} ).map(({ name, id, email, school }) => {
+                    ${teamDataArr.filter( employee => {return employee.getRole() === "Intern"} ).map(({ name, id, email, school }) => {
                         return `
                             <div class="card" style="width: 18rem;">
                                 <div class="card-header text-center">
