@@ -1,77 +1,261 @@
 const inquirer = require('inquirer');
-const Manager = require('../lib/Manager')
+const pageTemplate = require('./src/page-template.js');
+const writeFile = require('./utils/generatePage.js');
+const Manager = require("./lib/Manager");
+const Engineer = require("./lib/Engineer");
+const Intern = require("./lib/Intern");
+let teamData = [];
+const promptUserManager = () => {
+    console.log(`
+============================================
+  Welcocme to the Dev Team Page Builder!
+Follow the prompts below to build your team.
+============================================
+`);
+    return inquirer.prompt([
+        {
+            type: 'input',
+            name: 'managerName',
+            message: "What is the team manager's name?",
+            validate: managerName => {
+                if (managerName) {
+                    return true;
+                } else {
+                    console.log("Please enter the team manager's name!");
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'managerId',
+            message: "What is the team manager's ID#?",
+            validate: managerId => {
+                if (managerId > 0) {
+                    return true;
+                } else {
+                    console.log("Please enter a number that is greater than 0!");
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'managerEmail',
+            message: "What is the team manager's email address?",
+            validate: managerEmail => {
+                if (managerEmail) {
+                    return true;
+                } else {
+                    console.log("Please enter the team manager's email!");
+                    return false;
+                }
+            }
+        },
+        {
+            type: 'input',
+            name: 'managerOffice',
+            message: "What is the team manager's office number?",
+            validate: managerOffice => {
+                if (managerOffice > 0) {
+                    return true;
+                } else {
+                    console.log("Please enter a number that is greater than 0!");
+                    return false;
+                }
+            }
+        }
+    ]);
+};
+const promptTeamMember = () => {
+    console.log(`
+===== Add a Team Member =====
+    `);
+    return inquirer.prompt([
+        {
+            type: 'list',
+            name: 'teamMemberChoice',
+            message: 'Which type of team member would you like to add?',
+            choices: ['Intern', 'Engineer']
+        }
+    ])
+    .then(addMember => {
+        if (addMember.teamMemberChoice === 'Intern') {
+            console.log(`
+===== INTERN CHOSEN =====
+            `);
+            return inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'internName',
+                    message: "What is the intern's name?",
+                    validate: internName => {
+                        if (internName) {
+                            return true;
+                        } else {
+                            console.log("Please enter the intern's name!");
+                            return false;
+                        }
+                    }
+                },
+                {
+                    type: 'input',
+                    name: 'internId',
+                    message: "What is the intern's ID#?",
+                    validate: internId => {
+                        if (internId > 0) {
+                            return true;
+                        } else {
+                            console.log("Please enter a number that is greater than 0!");
+                            return false;
+                        }
+                    }
+                },
+                {
+                    type: 'input',
+                    name: 'internEmail',
+                    message: "What is the intern's email address?",
+                    validate: internEmail => {
+                        if (internEmail) {
+                            return true;
+                        } else {
+                            console.log("Please enter the intern's email!");
+                            return false;
+                        }
+                    }
+                },
+                {
+                    type: 'input',
+                    name: 'internSchool',
+                    message: "What school is the intern from?",
+                    validate: internSchool => {
+                        if (internSchool) {
+                            return true;
+                        } else {
+                            console.log("Please enter the intern's school!");
+                            return false;
+                        }
+                    }
+                },
+                {
+                    type: 'confirm',
+                    name: 'confirmAddMember',
+                    message: 'Would you like to enter another team member?',
+                    default: false
+                }
+            ])
+            .then(answers => {
+                const intern = new Intern(
+                    answers.internName,
+                    answers.internId,
+                    answers.internEmail,
+                    answers.internSchool);
+                teamData.push(intern);
+                if (answers.confirmAddMember) {
+                    return promptTeamMember();
+                } else {
+                    return;
+                }
+            });
+        }
+        else if (addMember.teamMemberChoice === 'Engineer') {
+            console.log(`
+===== ENGINEER CHOSEN =====
+            `);
+            return inquirer.prompt([
+                {
+                    type: 'input',
+                    name: 'engineerName',
+                    message: "What is the engineer's name?",
+                    validate: engineerName => {
+                        if (engineerName) {
+                            return true;
+                        } else {
+                            console.log("Please enter the engineer's name!");
+                            return false;
+                        }
+                    }
+                },
+                {
+                    type: 'input',
+                    name: 'engineerId',
+                    message: "What is the engineer's ID#?",
+                    validate: engineerId => {
+                        if (engineerId > 0) {
+                            return true;
+                        } else {
+                            console.log("Please enter a number that is greater than 0!");
+                            return false;
+                        }
+                    }
+                },
+                {
+                    type: 'input',
+                    name: 'engineerEmail',
+                    message: "What is the engineer's email address?",
+                    validate: engineerEmail => {
+                        if (engineerEmail) {
+                            return true;
+                        } else {
+                            console.log("Please enter the engineer's email!");
+                            return false;
+                        }
+                    }
+                },
+                {
+                    type: 'input',
+                    name: 'engineerGithub',
+                    message: "What is the engineer's GitHub profile name?",
+                    validate: engineerGithub => {
+                        if (engineerGithub) {
+                            return true;
+                        } else {
+                            console.log("Please enter the engineer's GitHub profile name!");
+                            return false;
+                        }
+                    }
+                },
+                {
+                    type: 'confirm',
+                    name: 'confirmAddMember',
+                    message: 'Would you like to enter another team member?',
+                    default: false
+                }
+            ])
+            .then(answers => {
+                const engineer = new Engineer(
+                    answers.engineerName,
+                    answers.engineerId,
+                    answers.engineerEmail,
+                    answers.engineerGithub);
+                teamData.push(engineer);
+                if (answers.confirmAddMember) {
+                    return promptTeamMember();
+                } else {
+                    return;
+                }
+            });
+        }
+    });
+};
 
-//Prompt User for team managers name, employee ID, email address, and office number
-inquirer
-    .prompt({
-            type: 'text',
-            name: 'name',
-            message: 'What is the team managers name?',
-        },
-        {
-            type: 'text',
-            name: 'employee_id',
-            message: 'What is the team managers employee ID?',
-        },
-        {
-            type: 'text',
-            name: 'email_address',
-            text: 'What is team managers email address?',
-        },
-        {
-            type: 'text',
-            name: 'office_number',
-            message: 'What is the team managers office number?',
-        },
-    ).then(function (answers) {
-        // what to do next
-        // create a manager
-        const manager = new Manager(answers.name, answers.employee_id, answers.email_address, answers.office_number)
-        // manager.getName
-        // prompt for more users
-        // -- ask what sort of employee
-        // -- get that info
-        // -- then
-        // -- -- if manager - new manger
-        // -- -- els if ena
-        // -- -- stop
-
+promptUserManager()
+    .then(answers => {
+        const manager = new Manager(
+            answers.managerName, 
+            answers.managerId, 
+            answers.managerEmail, 
+            answers.managerOffice);
+        teamData.push(manager);
+        promptTeamMember();
     })
-
-
-
-// Your Task
-// Your challenge is to build a Node.js command-line application that takes in information about employees on a software engineering team and generates an HTML webpage that displays summaries for each person. Because testing is key to making code maintainable, you’ll also write unit tests for each part of your code and ensure that it passes all of them.
-
-// Because this application won’t be deployed, you’ll also need to provide a link to a walkthrough video that demonstrates its functionality and all of the tests passing. You’ll need to submit a link to the video and add it to the README of your project.
-
-// User Story
-// AS A manager
-// I WANT to generate a webpage that displays my team's basic info
-// SO THAT I have quick access to their emails and GitHub profiles
-// Acceptance Criteria
-// GIVEN a command-line application that accepts user input
-// WHEN I am prompted for my team members and their information
-// THEN an HTML file is generated that displays a nicely formatted team roster based on user input
-// WHEN I click on an email address in the HTML
-// THEN my default email program opens and populates the TO field of the email with the address
-// WHEN I click on the GitHub username
-// THEN that GitHub profile opens in a new tab
-
-
-
-
-// WHEN I start the application
-// THEN I am prompted to enter the team manager’s name, ID, email address, and office number
-
-// WHEN I enter the team manager’s name, ID, email address, and office number
-// THEN I am presented with a menu with the option to add an engineer or an intern or to finish building my team
-
-// WHEN I select the engineer option
-// THEN I am prompted to enter the engineer’s name, ID, email, and GitHub username, and I am taken back to the menu
-
-// WHEN I select the intern option
-// THEN I am prompted to enter the intern’s name, ID, email, and school, and I am taken back to the menu
-
-// WHEN I decide to finish building my team
-// THEN I exit the application, and the HTML is generated
+    .then( completeArr => {
+        completeArr = teamData;
+        return pageTemplate(completeArr);
+    })
+    .then(writeHtml => {
+        return writeFile(writeHtml);
+    })
+    .catch(err => {
+        console.log(err);
+    });
