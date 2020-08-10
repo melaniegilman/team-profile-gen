@@ -5,17 +5,17 @@ const generateCards = teamDataArr => {
             <div class="row justify-content-center">
                 <div class="card-deck"> 
         
-                ${teamDataArr.filter( employee => {return employee.getRole() === "Manager"} ).map(({ name, id, email, office}) => {
+                ${teamDataArr.filter( employee => {return employee.getRole() === "Manager"} ).map(({ name, id, email, officeNumber}) => {
                             return `
-                            <div class="card" style="width: 18rem;">
-                                <div class="card-header text-center">
-                                    <h2 class="card-subtitle mb-2">${name}</h3>
-                                    <h4 class="card-subtitle mb-2"><i class="glyphicon glyphicon-king" aria-hidden="true"></i> Team Manager</h5>
+                            <div class="card bg-muted" style="width: 18rem;">
+                                <div class="card-header text-center bg-info text-white">
+                                    <h4 class="card-subtitle mb-2">${name}</h4>
+                                    <h6 class="card-subtitle mb-2"><i class="fas fa-mug-hot mr-2"></i>Team Manager</h6>
                             </div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">ID: ${id} </li>
                                 <li class="list-group-item">Email: <a href="mailto:${email}" target="_top">${email}</a></li>
-                                <li class="list-group-item">Office Number: ${office}</li>
+                                <li class="list-group-item">Office Number: ${officeNumber}</li>
                             </ul>
                             </div>
                        
@@ -24,15 +24,15 @@ const generateCards = teamDataArr => {
                
                     ${teamDataArr.filter( employee => {return employee.getRole() === "Engineer"} ).map(({ name, id, email, github }) => {
                         return `
-                            <div class="card" style="width: 18rem;">
-                                <div class="card-header text-center">
-                                    <h2 class="card-subtitle mb-2">${name}</h3>
-                                    <h4 class="card-subtitle mb-2"><i class="glyphicon glyphicon-wrench" aria-hidden="true"></i> Engineer</h5>
+                            <div class="card bg-muted" style="width: 18rem;">
+                                <div class="card-header text-center bg-info text-white">
+                                    <h4 class="card-subtitle mb-2">${name}</h4>
+                                    <h6 class="card-subtitle mb-2"><i class="fas fa-glasses"></i>Engineer</h6>
                             </div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">ID: ${id} </li>
                                 <li class="list-group-item">Email: <a href="mailto:${email}" target="_top">${email}</a></li>
-                                <li class="list-group-item">GitHub: ${github}</li>
+                                <li class="list-group-item">GitHub: <a href="https://github.com/${github}" target="_blank" rel="none">${github}</a></li>
                             </ul>
                             </div>
                         `;
@@ -40,10 +40,10 @@ const generateCards = teamDataArr => {
                 
                     ${teamDataArr.filter( employee => {return employee.getRole() === "Intern"} ).map(({ name, id, email, school }) => {
                         return `
-                            <div class="card" style="width: 18rem;">
-                                <div class="card-header text-center">
-                                    <h2 class="card-subtitle mb-2">${name}</h3>
-                                    <h4 class="card-subtitle mb-2"><i class="glyphicon glyphicon-education" aria-hidden="true"></i> Intern</h5>
+                            <div class="card bg-muted" style="width: 18rem;">
+                                <div class="card-header text-center bg-info text-white">
+                                    <h4 class="card-subtitle mb-2">${name}</h4>
+                                    <h6 class="card-subtitle mb-2"><i class="fas fa-user-graduate"></i>Intern</h6>
                             </div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">ID: ${id} </li>
@@ -72,10 +72,10 @@ module.exports = templateData => {
         <title>My Dev Team Page</title>
     </head>
     <body>
-        <div class="jumbotron jumbotron-fluid text-center" style="padding: 20px">
-            <div class="container">
-              <h1 class="display-4">My Dev Team</h1>
-              <p class="lead">Checkout who is on our team!</p>
+        <div class="jumbotron jumbotron-fluid text-center" bg-info style="padding: 20px">
+            <div class="container bg-info">
+              <h2 class="display-4 text-white">Your Team</h2>
+              <p class="lead text-white">Meet your team mates!</p>
             </div>
         </div>
             ${generateCards(templateData)}
