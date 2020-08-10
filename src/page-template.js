@@ -10,7 +10,7 @@ const generateCards = teamDataArr => {
                             <div class="card bg-muted" style="width: 18rem;">
                                 <div class="card-header text-center bg-info text-white">
                                     <h4 class="card-subtitle mb-2">${name}</h4>
-                                    <h6 class="card-subtitle mb-2"><i class="fas fa-mug-hot mr-2"></i>Team Manager</h6>
+                                    <h6 class="card-subtitle mb-2">Team Manager</h6>
                             </div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">ID: ${id} </li>
@@ -27,7 +27,7 @@ const generateCards = teamDataArr => {
                             <div class="card bg-muted" style="width: 18rem;">
                                 <div class="card-header text-center bg-info text-white">
                                     <h4 class="card-subtitle mb-2">${name}</h4>
-                                    <h6 class="card-subtitle mb-2"><i class="fas fa-glasses"></i>Engineer</h6>
+                                    <h6 class="card-subtitle mb-2">Engineer</h6>
                             </div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">ID: ${id} </li>
@@ -43,7 +43,7 @@ const generateCards = teamDataArr => {
                             <div class="card bg-muted" style="width: 18rem;">
                                 <div class="card-header text-center bg-info text-white">
                                     <h4 class="card-subtitle mb-2">${name}</h4>
-                                    <h6 class="card-subtitle mb-2"><i class="fas fa-user-graduate"></i>Intern</h6>
+                                    <h6 class="card-subtitle mb-2">Intern</h6>
                             </div>
                             <ul class="list-group list-group-flush">
                                 <li class="list-group-item">ID: ${id} </li>
